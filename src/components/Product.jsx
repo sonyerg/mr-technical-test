@@ -5,7 +5,6 @@ export default function Product() {
   const [selectedSize, setSelectedSize] = useState("");
   const [error, setError] = useState("");
   const [product, setProduct] = useState(null);
-
   const { handleAddToCart } = useCart();
 
   useEffect(() => {
@@ -47,18 +46,21 @@ export default function Product() {
                 {error && <p className="text-red-500">{error}</p>}
 
                 <label className="block">Select Size:</label>
-                <select
-                  value={selectedSize}
-                  onChange={(e) => setSelectedSize(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                >
-                  <option value="">Select Size</option>
-                  {product.sizeOptions.map((sizeOption) => (
-                    <option key={sizeOption.id} value={sizeOption.label}>
-                      {sizeOption.label}
-                    </option>
-                  ))}
-                </select>
+
+                {product.sizeOptions.map((sizeOption) => (
+                  <button
+                    key={sizeOption.id}
+                    value={sizeOption.label}
+                    onClick={() => setSelectedSize(sizeOption.label)}
+                    className={`m-1 p-2 border-2 text-sm items-center w-10 h-10 ${
+                      selectedSize === sizeOption.label
+                        ? "border-black"
+                        : "border-gray-100"
+                    } hover:border-black focus:outline-none focus:border-black rounded-none`}
+                  >
+                    {sizeOption.label}
+                  </button>
+                ))}
               </div>
 
               <button
