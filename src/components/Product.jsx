@@ -21,21 +21,31 @@ export default function Product() {
       setError("Please select a size.");
       return;
     }
-    handleAddToCart({ size: selectedSize, quantity: 1 });
+
+    const itemToAdd = {
+      size: selectedSize,
+      quantity: 1,
+      imageURL: product.imageURL,
+      title: product.title,
+      price: product.price,
+    };
+
+    handleAddToCart(itemToAdd);
     setSelectedSize("");
     setError("");
   };
 
   return (
-    <div className="md:mx-24 mt-10">
+    <div className="md:mx-24 mt-10 text-fontPrimary">
       {product && (
         <div className="bg-white overflow-hidden flex flex-col">
           <div className="flex flex-col sm:flex-row">
             <img
               src={product.imageURL}
               alt={product.title}
-              className="w-full p-4 sm:w-1/3 sm:p-0"
+              className="w-full p-4 sm:w-1/2 sm:p-0 max-w-full h-auto sm:max-h-96 object-contain"
             />
+
             <div className="p-4 sm:pl-10 w-full sm:w-2/3">
               <h2 className="text-xl font-semibold text-gray-800">
                 {product.title}
@@ -43,9 +53,9 @@ export default function Product() {
               <h3 className="font-bold">{`$${product.price}.00`}</h3>
               <p className="text-gray-600 mt-2">{product.description}</p>
               <div className="mt-4">
-                {error && <p className="text-red-500">{error}</p>}
+                {error && <p className="text-requiredStar">{error}</p>}
 
-                <label className="block">Select Size:</label>
+                <label className="block text-sm ">SIZE:</label>
 
                 {product.sizeOptions.map((sizeOption) => (
                   <button
@@ -54,9 +64,9 @@ export default function Product() {
                     onClick={() => setSelectedSize(sizeOption.label)}
                     className={`m-1 p-2 border-2 text-sm items-center w-10 h-10 ${
                       selectedSize === sizeOption.label
-                        ? "border-black"
-                        : "border-gray-100"
-                    } hover:border-black focus:outline-none focus:border-black rounded-none`}
+                        ? "border-borderDarkGrey"
+                        : "border-borderLightGrey"
+                    } hover:border-borderDarkGrey focus:outline-none focus:border-borderDarkGrey rounded-none`}
                   >
                     {sizeOption.label}
                   </button>
@@ -65,7 +75,7 @@ export default function Product() {
 
               <button
                 onClick={addToCart}
-                className="uppercase tracking-wide bg-white border-2 border-black
+                className="uppercase tracking-wide bg-white border-2 border-borderDarkGrey
                  hover:bg-black hover:text-white text-black font-bold py-2 px-4 
                  mt-2 transition duration-200"
               >
